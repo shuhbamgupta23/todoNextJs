@@ -13,13 +13,19 @@ const CustomNavbar = () => {
       <div>
         <ul className="flex space-x-5">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/" className="hover:text-blue-200">
+              Home
+            </Link>
           </li>
           <li>
-            <Link href="/add-task">Add Task</Link>
+            <Link href="/add-task" className="hover:text-blue-200">
+              Add Task
+            </Link>
           </li>
           <li>
-            <Link href="#">Show Tasks</Link>
+            <Link href="/show-tasks" className="hover:text-blue-200">
+              Show Tasks
+            </Link>
           </li>
         </ul>
       </div>
