@@ -13,7 +13,6 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
   const { title, content, userId } = await request.json();
-
   try {
     const task = new Task({
       title,

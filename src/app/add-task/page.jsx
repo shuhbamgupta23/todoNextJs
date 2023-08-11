@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LoginSvg from "../../assets/login.svg";
 import Image from "next/image";
-
+import { addTask } from "@/services/taskService";
+import { toast } from "react-toastify";
 export const metadata = {
   title: "Add Task : Work Manager",
 };
@@ -12,12 +13,38 @@ const AddTask = () => {
     title: "",
     content: "",
     status: "",
-    userId: "",
+    userId: "64cfbef14e34df958768cc95",
   });
+  useEffect(() => {
+    document.title = metadata.title;
+  }, []);
 
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
-    console.log(task);
+  };
+
+  const clearTask = () => {
+    setTask({
+      title: "",
+      content: "",
+      status: "",
+      userId: "64cfbef14e34df958768cc95",
+    });
+  };
+
+  const handleAddTask = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await addTask(task);
+      toast.success("Your task has been added", {
+        position: "top-center",
+      });
+    } catch (err) {
+      toast.error("Task not added", {
+        position: "top-center",
+      });
+    }
+    clearTask();
   };
 
   return (
@@ -33,7 +60,7 @@ const AddTask = () => {
           ></Image>
         </div>
         <h1 className="text-3xl text-center">Add your task here !!</h1>
-        <form action="">
+        <form action="" onSubmit={(e) => handleAddTask(e)}>
           <div className="mt-4">
             <label
               htmlFor="task_title"
@@ -94,7 +121,7 @@ const AddTask = () => {
           </div>
           <div className="mt-4 flex justify-center">
             <button className="bg-blue-600 px-3 py-2 rounded hover:bg-blue-800 text-sm font-medium">
-              Add Todo
+              Add Task
             </button>
             <button className="bg-red-600 px-3 py-2 rounded hover:bg-red-800 ms-3 text-sm font-medium">
               Clear
