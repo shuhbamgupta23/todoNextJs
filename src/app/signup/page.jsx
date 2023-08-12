@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import SignUpSvg from "../../assets/signup.svg";
 import Image from "next/image";
-import { signUp } from "@/services/taskService";
+
 import { toast } from "react-toastify";
+import axios from "axios";
 export const metadata = {
   title: "Signup : Work Manager",
 };
@@ -34,14 +35,23 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (user.name.trim() === "" || user.name == null) {
+      toast.warning("Name is required", { position: "top-center" });
+      return;
+    }
     try {
-      const result = await signUp(user);
-      clearUser();
+      const result = await axios.post("http://localhost:3000/api/users", user);
+      const data = result.data;
+      if (data.status === false) {
+        throw new Error();
+      }
+      console.log(data);
       toast.success("Sign Up successful", { position: "top-right" });
     } catch (err) {
       console.log(err);
       toast.error("Sign Up failed", { position: "top-right" });
     }
+    clearUser();
   };
 
   useEffect(() => {
@@ -61,7 +71,7 @@ const SignUp = () => {
               alt="signup banner"
             ></Image>
           </div>
-          <h1 className="text-3xl">Sign Up Here</h1>
+          <h1 className="text-3xl text-center">Sign Up Here</h1>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className="mt-3">
               <label
@@ -126,7 +136,10 @@ const SignUp = () => {
               <button className="bg-green-600 px-3 py-2 rounded hover:bg-green-800 text-sm font-medium">
                 Sign Up
               </button>
-              <button className="bg-red-600 px-3 py-2 rounded hover:bg-red-800 ms-3 text-sm font-medium">
+              <button
+                className="bg-red-600 px-3 py-2 rounded hover:bg-red-800 ms-3 text-sm font-medium"
+                onClick={clearUser}
+              >
                 reset
               </button>
             </div>

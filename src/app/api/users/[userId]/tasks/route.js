@@ -9,7 +9,7 @@ export const GET = async (request, { params }) => {
     const tasks = await Task.find({
       userId: userId,
     });
-    return NextResponse.json(tasks, { status: 201 });
+    return NextResponse.json({ tasks, status: true }, { status: 201 });
   } catch (err) {
     return getErrorNextResponse(
       "Error while fetching task for user",

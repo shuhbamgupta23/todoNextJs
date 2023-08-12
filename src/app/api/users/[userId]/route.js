@@ -5,7 +5,7 @@ export const GET = async (request, { params }) => {
   const { userId } = params;
   try {
     const user = await User.findById(userId);
-    return NextResponse.json(user, { status: 201 });
+    return NextResponse.json({ user, status: true }, { status: 201 });
   } catch (err) {
     return NextResponse.json({
       message: "Error in getting the user",
@@ -42,7 +42,7 @@ export const PUT = async (request, { params }) => {
     user.about = about;
     user.profileURL = profileURL;
     await user.save();
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json({ user, status: true }, { status: 200 });
   } catch (err) {
     return NextResponse.json({
       success: false,

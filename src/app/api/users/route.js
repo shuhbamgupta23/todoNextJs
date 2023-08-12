@@ -7,7 +7,7 @@ export const GET = async (request) => {
   let users = [];
   try {
     users = await User.find().select("-password");
-    return NextResponse.json(users, { status: 201 });
+    return NextResponse.json({ users, status: true }, { status: 201 });
   } catch (err) {
     return NextResponse.json({
       message: err,
@@ -27,9 +27,12 @@ export const POST = async (request) => {
       profileURL,
     });
     const createdUser = await user.save();
-    return NextResponse.json(user, {
-      status: 201,
-    });
+    return NextResponse.json(
+      { user, status: true },
+      {
+        status: 201,
+      }
+    );
   } catch (err) {
     console.log(err);
     return NextResponse.json({

@@ -21,7 +21,7 @@ export const PUT = async (request, { params }) => {
     task.content = content;
     task.status = status;
     const updatedTask = await task.save();
-    return NextResponse.json(task);
+    return NextResponse.json({ task, status: true });
   } catch (err) {
     return getErrorNextResponse(err, 404, false);
   }
