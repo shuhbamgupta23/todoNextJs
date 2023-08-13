@@ -20,6 +20,7 @@ const SignUp = () => {
   });
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    console.log(user);
   };
 
   const clearUser = () => {
@@ -45,7 +46,6 @@ const SignUp = () => {
       if (data.status === false) {
         throw new Error();
       }
-      console.log(data);
       toast.success("Sign Up successful", { position: "top-right" });
     } catch (err) {
       console.log(err);
