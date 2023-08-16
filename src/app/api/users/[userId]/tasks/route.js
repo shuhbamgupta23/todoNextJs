@@ -2,7 +2,8 @@
 import { getErrorNextResponse } from "@/helper/errorMessage";
 import { Task } from "@/models/task";
 import { NextResponse } from "next/server";
-
+import { connectDB } from "@/helper/db";
+connectDB();
 export const GET = async (request, { params }) => {
   const { userId } = params;
   try {

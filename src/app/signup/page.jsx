@@ -5,11 +5,13 @@ import Image from "next/image";
 
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 export const metadata = {
   title: "Signup : Work Manager",
 };
 
 const SignUp = () => {
+  const router = useRouter();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -47,6 +49,7 @@ const SignUp = () => {
         throw new Error();
       }
       toast.success("Sign Up successful", { position: "top-right" });
+      router.push("/login");
     } catch (err) {
       console.log(err);
       toast.error("Sign Up failed", { position: "top-right" });

@@ -1,7 +1,8 @@
 import { Task } from "@/models/task";
 import { NextResponse } from "next/server";
 import { getErrorNextResponse } from "@/helper/errorMessage";
-
+import { connectDB } from "@/helper/db";
+connectDB();
 export const GET = async (request) => {
   try {
     const tasks = await Task.find();

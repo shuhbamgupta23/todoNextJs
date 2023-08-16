@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import LoginSvg from "../../assets/login.svg";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { login } from "@/services/userService";
+import { useRouter } from "next/navigation";
 export const metadata = {
   title: "Login : Work Manager",
 };
 
 const Login = () => {
+  const router = useRouter();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -17,7 +20,7 @@ const Login = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginData.email.trim() === "" || loginData.email === null) {
       toast.error("Invalid Email address", { position: "top-center" });
@@ -28,8 +31,17 @@ const Login = () => {
       return;
     }
 
-    
-
+    try {
+      const result = await login(loginData);
+      console.log(result);
+      toast.success("Login Successful", { position: "top-center" });
+      router.push("/profile/user");
+    } catch (err) {
+      console.log(err);
+      toast.error("Error in login", {
+        position: "top-center",
+      });
+    }
   };
 
   useEffect(() => {
