@@ -5,10 +5,17 @@ import { NextRequest } from "next/server";
 export function middleware(request) {
   const authToken = request.cookies.get("authToken")?.value;
 
+  if (
+    request.nextUrl.pathname === "/api/login" ||
+    request.nextUrl.pathname === "/api/users"
+  ) {
+    return;
+  }
+
   const loggedInUserNotAccessPaths =
     request.nextUrl.pathname === "/login" ||
     request.nextUrl.pathname === "/signup";
-  console.log(loggedInUserNotAccessPaths);
+
   if (loggedInUserNotAccessPaths) {
     if (authToken) {
       return NextResponse.redirect(new URL("/profile/user", request.url));
@@ -16,6 +23,7 @@ export function middleware(request) {
   } else {
     if (!authToken) {
       return NextResponse.redirect(new URL("/login", request.url));
+    } else {
     }
   }
 }

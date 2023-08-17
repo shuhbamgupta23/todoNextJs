@@ -1,16 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoginSvg from "../../assets/login.svg";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { login } from "@/services/userService";
 import { useRouter } from "next/navigation";
+import UserContext from "@/context/usercontext";
 export const metadata = {
   title: "Login : Work Manager",
 };
 
 const Login = () => {
   const router = useRouter();
+  const context = useContext(UserContext)
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -35,6 +37,7 @@ const Login = () => {
       const result = await login(loginData);
       console.log(result);
       toast.success("Login Successful", { position: "top-center" });
+      context.setUser(result.user)
       router.push("/profile/user");
     } catch (err) {
       console.log(err);
